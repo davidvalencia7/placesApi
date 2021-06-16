@@ -35,6 +35,16 @@ app.post('/places', (req, res) => {
     })
 })
 
+app.get('/places', (req,res) => {
+  Place.find({})
+    .then( docs => {
+      res.json(docs)
+    })
+    .catch(err => {
+      res.json(err)
+    })
+})
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
