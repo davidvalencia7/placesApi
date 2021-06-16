@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 
+const DB = require('./config/database')
+DB.connect();
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
