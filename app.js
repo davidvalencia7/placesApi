@@ -45,6 +45,15 @@ app.get('/places', (req,res) => {
     })
 })
 
+app.get('/places/:id', (req, res) => {
+  Place.findById(req.params.id)
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.json(err)
+    })
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
