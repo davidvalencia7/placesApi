@@ -55,6 +55,32 @@ app.get('/places/:id', (req, res) => {
     })
 })
 
+app.put('/places/:id', (req,res) => {
+/*
+let attributes = ['title','description','atcceptsCreditCard','openHour','closeHour']
+let placeParams = {}
+attributes.forEach(attr => {
+  if(Object.prototype.hasOwnProperty.call(req.body,attr))
+    placeParams[attr] = req.body[attr]
+})
+*/
+
+  let placeParams = {title,description,acceptsCreditCard,openHour,closeHour} = req.body;
+  
+  Place.findByIdAndUpdate(
+    req.params.id,
+    placeParams
+    ,{
+      new:true
+    })
+    .then(doc => {
+      res.json(doc)
+    })
+    .catch(err => {
+      res.json(err)
+    })
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
