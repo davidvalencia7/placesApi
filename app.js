@@ -81,6 +81,16 @@ attributes.forEach(attr => {
     })
 })
 
+app.delete('/places/:id', (req,res) => {
+  Place.findByIdAndRemove(req.params.id)
+    .then(doc => {
+      res.json({})
+    })
+    .catch(err => {
+      res.json(err)
+    })
+})
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
