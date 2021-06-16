@@ -4,7 +4,7 @@ const dbName = 'places_facilito'
 const mongoConnectionString = 'mongodb://localhost/'+dbName
 
 module.exports = {
-    connect : () => mongoose.connect(mongoConnectionString,{useNewUrlParser: true, useUnifiedTopology: true}),
+    connect : () => mongoose.connect(mongoConnectionString,{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }),
     dbName,
 
     connection : () => {
