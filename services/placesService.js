@@ -1,7 +1,7 @@
 const Place = require('../models/Place')
 
-const allPlaces = async () => {
-     places = await Place.find({})
+const allPlaces = async (req) => {
+     places = await Place.paginate({},{ page: req.query.page || 1, limit : 8, sort : {_id:-1} })
      return places
         
 }
@@ -46,5 +46,6 @@ const deletePlace = async (id) => {
     let place = await Place.findByIdAndRemove(req.params.id)
     return place
 }
+
 
 module.exports = { allPlaces,addPlace,getPlace,updatePlace,deletePlace }

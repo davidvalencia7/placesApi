@@ -4,7 +4,7 @@ const placesService = require('../services/placesService')
 
 const index = async (req, res) => {
     //todos los lugares
-    await placesService.allPlaces()
+    await placesService.allPlaces(req)
         .then(docs => {
             return res.json(docs)
         })

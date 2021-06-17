@@ -4,6 +4,7 @@ let router = express.Router()
 
 const placesController = require('../controllers/PlacesController')
 
+
 router.route('/')
     .get(placesController.index)
     .post(placesController.create)
