@@ -1,5 +1,7 @@
 module.exports = {
-    apiKey: '519583285879432',
-    cloudName: 'davis7',
-    apiSecret : 'K5zRnNyOipp1lnhT4K9m-yQUhn0'
+    cloudinary: {
+        cloud_name: 'davis7',
+        api_key: '519583285879432',
+        api_secret : 'K5zRnNyOipp1lnhT4K9m-yQUhn0'
+    }
 }
