@@ -10,6 +10,7 @@ const addPlace = async (req) => {
     let placeParams = {title, description, acceptsCreditCard, openHour,closeHour } = req.body
 
     let place = await Place.create(placeParams)
+    console.log("desde servicices:",place)
     return  place
         
     

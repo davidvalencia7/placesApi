@@ -17,11 +17,12 @@ const index =  (req, res) => {
     
     }
 
-const create = async (req,res,next) => {
+const create =  (req,res,next) => {
     //crear nuevos lugares
-    await placesService.addPlace(req)
+    placesService.addPlace(req)
             .then( doc => {
                 req.place = doc
+                console.log(req.place)
                 next()
                 //return res.json(doc)
             })
@@ -66,6 +67,7 @@ const destroy = async (req,res) => {
 
 
 const multerMiddleware = () => {
+    console.log("midleware")
     return upload.fields([
         {name: 'avatar', maxCount:1},
         {name: 'cover', maxCount: 1}
@@ -73,17 +75,25 @@ const multerMiddleware = () => {
 }
 
 const saveImage = (req, res) => {
+    //console.log("ultimo middleware",req.place)
     if(req.place){
-        if(req.files && req.files.avatar){
-            const path = req.files.avatar[0].path
-            uploader(path).then( result => {
-                console.log(result)
-                res.json(req.place)
-            })
-            .catch(err => {
-                res.json(err)
-            })
-        }
+        const files = ['avatar','cover']
+        const promises = []
+
+        files.forEach( imageType => {
+            if(req.files && req.files[imageType]){
+                const path = req.files[imageType][0].path
+                promises.push(req.place.updateImage(path,imageType))
+            }
+        })
+
+        Promise.all(promises).then( results => {
+            res.json(req.place)
+        })
+        .catch(err => {
+            res.json(err)
+        })
+
     }
     else{
         res.status(422).json({
