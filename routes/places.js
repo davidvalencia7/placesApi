@@ -14,7 +14,7 @@ router.route('/')
         placesController.saveImage
     )
 
-    router.route('/:id')
+    router.route('/:slug')
     .get(placesController.show)
     .put(placesController.update)
     .delete(placesController.destroy)

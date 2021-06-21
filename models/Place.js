@@ -32,16 +32,41 @@ placeSchema.methods.updateImage = function(path,imageType) {
 
 placeSchema.methods.saveImageUrl = function(secureUrl, imageType) {
     this[imageType+'Image'] = secureUrl
-    console.log(this)
+    console.log("Save Image:",this)
     return this.save()
 }
 
 placeSchema.pre('save', function(next) { //antes de guardar
-    this.slug = slugify(this.title)
-    next()
+    if(this.slug) return next()
+    generateSlugAndContinue.call(this,0,next)
 })
 
+placeSchema.statics.validateSlugCount = function(slug){
+    return Place.count({slug : slug}).then(count =>{
+        if(count > 0) 
+            return false
+        return true
+    })
+}
+
 placeSchema.plugin(mongoosePaginate)
+
+function generateSlugAndContinue(count,next){
+    this.slug = slugify(this.title)
+    //console.log("cont:",count)
+
+    if(count != 0)
+        this.slug = this.slug + "-"+count
+        //console.log(this)
+
+    Place.validateSlugCount(this.slug).then( isValid => {
+        if(!isValid)
+            return generateSlugAndContinue.call(this,count+1,next)
+
+            next()
+    })
+
+}
 
 let Place = mongoose.model('Place', placeSchema)
 

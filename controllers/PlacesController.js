@@ -22,7 +22,7 @@ const create =  (req,res,next) => {
     placesService.addPlace(req)
             .then( doc => {
                 req.place = doc
-                console.log(req.place)
+                //console.log("desde controller:",req.place)
                 next()
                 //return res.json(doc)
             })
@@ -34,7 +34,7 @@ const create =  (req,res,next) => {
 
 const show = async (req,res) => {
     //busqueda individual
-    await placesService.getPlace(req.params.id)
+    await placesService.getPlace(req.params.slug)
             .then(doc => {
                 return res.json(doc)
             })
@@ -56,7 +56,7 @@ const update =  async (req,res) => {
 
 const destroy = async (req,res) => {
     //eliminar recurso
-    await placesService.deletePlace(req.params.id)
+    await placesService.deletePlace(req.params.slug)
             .then(doc => {
                 return res.json(doc)
             })
@@ -75,7 +75,7 @@ const multerMiddleware = () => {
 }
 
 const saveImage = (req, res) => {
-    //console.log("ultimo middleware",req.place)
+    console.log("ultimo middleware",req.place)
     if(req.place){
         const files = ['avatar','cover']
         const promises = []

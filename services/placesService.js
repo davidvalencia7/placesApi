@@ -10,14 +10,15 @@ const addPlace = async (req) => {
     let placeParams = {title, description, acceptsCreditCard, openHour,closeHour } = req.body
 
     let place = await Place.create(placeParams)
-    console.log("desde servicices:",place)
+    //console.log("desde servicices:",place)
+
     return  place
         
     
 }
 
-const getPlace = async (id) => {
-    let place = await Place.findById(id)
+const getPlace = async (slug) => {
+    let place = await Place.findOne({slug:slug})
     return place
 }
 
@@ -32,9 +33,9 @@ const updatePlace = async (req) => {
     */
         
     let placeParams = {title,description,acceptsCreditCard,openHour,closeHour} = req.body;
-          
-    let place = await Place.findByIdAndUpdate(
-          req.params.id,
+
+    let place = await Place.findOneAndUpdate(
+          { slug: req.params.slug },
           placeParams
           ,{
             new:true
@@ -43,8 +44,8 @@ const updatePlace = async (req) => {
     return place
 }
 
-const deletePlace = async (id) => {
-    let place = await Place.findByIdAndRemove(req.params.id)
+const deletePlace = async (slug) => {
+    let place = await Place.findOneAndRemove({slug:slug})
     return place
 }
 
