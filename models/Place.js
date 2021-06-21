@@ -13,6 +13,7 @@ let placeSchema = new mongoose.Schema({
         unique : true
     },
     description : String,
+    address : String,
     acceptsCreditCard : {
         type : Boolean,
         default: false

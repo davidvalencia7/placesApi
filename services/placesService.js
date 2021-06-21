@@ -1,4 +1,7 @@
 const Place = require('../models/Place')
+const helpers = require('./helpers')
+
+const validParams = ['title','description','address','acceptsCreditCard','openHour','closeHour']
 
 const allPlaces = async (req) => {
      places = await Place.paginate({},{ page: req.query.page || 1, limit : 8, sort : {_id:-1} })
@@ -7,9 +10,10 @@ const allPlaces = async (req) => {
 }
 
 const addPlace = async (req) => {
-    let placeParams = {title, description, acceptsCreditCard, openHour,closeHour } = req.body
+    //let placeParams = {title, description, acceptsCreditCard, openHour,closeHour } = req.body
+    const params = helpers.paramsBuilder(validParams,req.body)
 
-    let place = await Place.create(placeParams)
+    let place = await Place.create(params)
     //console.log("desde servicices:",place)
 
     return  place
@@ -32,7 +36,7 @@ const updatePlace = async (req) => {
         })
     */
         
-    let placeParams = {title,description,acceptsCreditCard,openHour,closeHour} = req.body;
+    /*let placeParams = {title,description,acceptsCreditCard,openHour,closeHour} = req.body;
 
     let place = await Place.findOneAndUpdate(
           { slug: req.params.slug },
@@ -40,8 +44,20 @@ const updatePlace = async (req) => {
           ,{
             new:true
           })
-        
+        return place
+    */
+    
+    const params = helpers.paramsBuilder(validParams,req.body)
+    let place = await Place.findOneAndUpdate(
+        { slug: req.params.slug },
+        params
+        ,{
+          new:true
+        })
+ 
+    
     return place
+
 }
 
 const deletePlace = async (slug) => {

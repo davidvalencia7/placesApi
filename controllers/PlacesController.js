@@ -47,6 +47,7 @@ const update =  async (req,res) => {
     //actualizar un recurso
     await placesService.updatePlace(req)
             .then(doc => {
+                console.log("update:",doc)
                 return res.json(doc)
             })
             .catch(err => {
