@@ -1,4 +1,4 @@
-function paramsBuilder(validParams,body){
+function buildParams(validParams,body){
     let params = {}
 
     validParams.forEach(attr => {
@@ -9,4 +9,4 @@ function paramsBuilder(validParams,body){
     return params
 }
 
-module.exports = { paramsBuilder }
+module.exports = { buildParams }
