@@ -1,14 +1,32 @@
 const jwt = require('jsonwebtoken')
 const secrets = require('../config/secrets')
+const userService = require('../services/userService')
 
+
+const authenticate = async (req,res,next) => {
+    try{
+        let user = await userService.getUser(req.body.email)
+        let valid = await user.verifyPassword(req.body.password)
+        //console.log("Valid:",valid)
+        if(valid){
+            req.user = user
+            next()
+        }else{
+            console.log("error")
+            next(new Error('Invalid Credential'))
+        }
+    }catch(error){
+        next(error)
+    }
+}
 
 const generateToken = (req,res,next) => {
     try{
-    if(!req.user) return next()
+        if(!req.user) return next()
 
         req.token = jwt.sign({id: req.user._id}, secrets.jwtSecret)
 
-    next()
+        next()
 
     }catch(error){
         res.json(error)
@@ -32,4 +50,4 @@ const sendToken = (req, res) => {
     }
 }
 
-module.exports = { generateToken, sendToken }
+module.exports = { generateToken, sendToken, authenticate }

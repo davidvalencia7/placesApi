@@ -14,4 +14,9 @@ const addUser  = async (req,res) => {
     
 }
 
-module.exports = { addUser}
+const getUser = async (email) => {
+    let user = await User.findOne({email : email})
+    return user
+}
+
+module.exports = { addUser, getUser }
