@@ -12,7 +12,8 @@ const allPlaces = async (req) => {
 const addPlace = async (req) => {
     //let placeParams = {title, description, acceptsCreditCard, openHour,closeHour } = req.body
     const params = helpers.buildParams(validParams,req.body)
-
+    console.log(req.user)
+    params['_user'] = req.user.id
     let place = await Place.create(params)
     //console.log("desde servicices:",place)
 

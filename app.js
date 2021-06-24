@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+const jwtMiddleware = require('express-jwt')
 
 
 const  places = require('./routes/places')
@@ -9,6 +10,8 @@ const users = require('./routes/users')
 const sessions = require('./routes/sessions')
 
 const DB = require('./config/database')
+
+const secrets = require('./config/secrets')
 
 
 DB.connect();
@@ -20,6 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(
+  jwtMiddleware( {secret : secrets.jwtSecret, algorithms: ['HS256'] } )
+  .unless({path: ['/sessions','/users'], method : 'GET' })
+ )
 
 app.use('/places',places) //montar el router de places
 app.use('/users', users)
