@@ -13,8 +13,8 @@ const DB = require('./config/database')
 
 const secrets = require('./config/secrets')
 
-
 DB.connect();
+
 var app = express();
 
 

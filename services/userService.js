@@ -4,7 +4,7 @@ const buildParams = require('./helpers').buildParams
 const validParams = ['email','name','password']
 
 const getAllUsers = async () => {
-    
+    return await User.find()
 }
 
 const addUser  = async (req,res) => {
@@ -23,6 +23,15 @@ const getUser = async (email) => {
     return user
 }
 
+const getMyPlaces = async  (id) => {
+    //console.log("Service:",id)
+    let user = await User.findOne({'_id':id})
+    //console.log("Service:",user)
+    let places = await user.places  //virtual por eso regresa una promesa
+    //console.log("virtual:",places);
+    return  places
+}
+
 const updateUser = async (req,res) => {
 
 }
@@ -31,4 +40,4 @@ const deleteUser = async (req,res) => {
 
 }
 
-module.exports = { addUser, getUser }
+module.exports = {getAllUsers, addUser, getUser, getMyPlaces }
