@@ -34,36 +34,30 @@ const create =  (req,res,next) => {
 
 const show = async (req,res) => {
     //busqueda individual
-    await placesService.getPlace(req.params.slug)
-            .then(doc => {
-                return res.json(doc)
-            })
-            .catch(err => {
-                return res.json(err)
-            })
+    let place = await placesService.getPlace(req)
+
+    return res.json(place)
+
 }
 
 const update =  async (req,res) => {
     //actualizar un recurso
-    await placesService.updatePlace(req)
-            .then(doc => {
-                console.log("update:",doc)
-                return res.json(doc)
-            })
-            .catch(err => {
-                return res.json(err)
-            })
+    try{
+        let place = await placesService.updatePlace(req)
+        console.log("update:",place)
+        return res.json(place)
+    }catch(err){
+        return res.json(err)
+    }
+
 }
 
 const destroy = async (req,res) => {
     //eliminar recurso
-    await placesService.deletePlace(req.params.slug)
-            .then(doc => {
-                return res.json(doc)
-            })
-            .catch(err => {
-                return res.json(err)
-            })
+    let place = await placesService.deletePlace(req)
+
+    return res.json(place)
+
 }
 
 

@@ -22,9 +22,9 @@ const addPlace = async (req) => {
     
 }
 
-const getPlace = async (slug) => {
-    let place = await Place.findOne({slug:slug})
-    return place
+const getPlace = async (req) => {
+    //let place = await Place.findOne({slug:slug})
+    return req.place
 }
 
 const updatePlace = async (req) => {
@@ -47,23 +47,24 @@ const updatePlace = async (req) => {
           })
         return place
     */
-    
-    const params = helpers.paramsBuilder(validParams,req.body)
-    let place = await Place.findOneAndUpdate(
-        { slug: req.params.slug },
-        params
-        ,{
-          new:true
-        })
- 
-    
-    return place
+    try{
+      const params = helpers.buildParams(validParams,req.body)
+      req.place = Object.assign(req.place,params)
+
+      let place = await  req.place.save()
+      console.log("service:",place)
+      return place
+    }catch(err){
+
+      return {error : ''+ err }
+    }
 
 }
 
-const deletePlace = async (slug) => {
-    let place = await Place.findOneAndRemove({slug:slug})
-    return place
+const deletePlace = async (req) => {
+    //let place = await Place.findOneAndRemove({slug:slug})
+    return await req.place.remove()
+              
 }
 
 

@@ -5,7 +5,7 @@ function buildParams(validParams,body){
         if(Object.prototype.hasOwnProperty.call(body,attr))
             params[attr] = body[attr]
     })
-
+    console.log("params:", params)
     return params
 }
 

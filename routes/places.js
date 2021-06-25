@@ -3,6 +3,8 @@ const { MulterError } = require('multer')
 
 let router = express.Router()
 
+const findPlaceMiddleware = require('../middlewares/findPlacesMiddleware')
+
 const placesController = require('../controllers/PlacesController')
 
 
@@ -15,9 +17,9 @@ router.route('/')
     )
 
     router.route('/:slug')
-    .get(placesController.show)
-    .put(placesController.update)
-    .delete(placesController.destroy)
+    .get(findPlaceMiddleware, placesController.show)
+    .put(findPlaceMiddleware, placesController.update)
+    .delete(findPlaceMiddleware, placesController.destroy)
 
 
 
