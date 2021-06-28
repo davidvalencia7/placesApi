@@ -3,10 +3,10 @@ const { MulterError } = require('multer')
 
 let router = express.Router()
 
-const findPlaceMiddleware = require('../middlewares/findPlacesMiddleware')
-
 const placesController = require('../controllers/PlacesController')
 
+const findPlaceMiddleware = require('../middlewares/findPlacesMiddleware')
+const authenticateOwner = require('../middlewares/authenticateOwner')
 
 router.route('/')
     .get(placesController.index)
@@ -18,8 +18,8 @@ router.route('/')
 
     router.route('/:slug')
     .get(findPlaceMiddleware, placesController.show)
-    .put(findPlaceMiddleware, placesController.update)
-    .delete(findPlaceMiddleware, placesController.destroy)
+    .put(findPlaceMiddleware, authenticateOwner, placesController.update)
+    .delete(findPlaceMiddleware, authenticateOwner, placesController.destroy)
 
 
 

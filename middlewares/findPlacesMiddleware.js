@@ -5,6 +5,7 @@ module.exports = async (req,res,next) => {
         let place = await Place.findOne({slug: req.params.slug})
         console.log("Middleware:",place)
         req.place = place
+        req.mainObj = place
         next()
     }catch(err) {
         next(err)

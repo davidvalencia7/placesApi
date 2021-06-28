@@ -47,6 +47,7 @@ const update =  async (req,res) => {
         console.log("update:",place)
         return res.json(place)
     }catch(err){
+        console.log("update error")
         return res.json(err)
     }
 
