@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 
 let favoriteSchema = new mongoose.Schema({
     _user : {
-        type: mongoose.Schema.Types.ObjetId,
+        type: mongoose.Schema.Types.ObjectId,
         ref : 'User',
         required : true 
     },
     _place : {
-        type : mongoose.Schema.ObjetId,
+        type : mongoose.Schema.Types.ObjectId,
         ref: 'Place',
         required : true
     }
