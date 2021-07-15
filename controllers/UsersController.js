@@ -22,7 +22,7 @@ const create = async (req,res, next) => {
 
 const myplaces = async (req, res, next) => {
     try{
-        //console.log("controller:",req.user)
+        console.log("controller:",req.user)
         let places = await userService.getMyPlaces(req.user.id)
         //console.log("otro controller:",places);
         return res.json(places)

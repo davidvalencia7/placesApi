@@ -26,9 +26,9 @@ const getUser = async (email) => {
 const getMyPlaces = async  (id) => {
     //console.log("Service:",id)
     let user = await User.findOne({'_id':id})
-    //console.log("Service:",user)
+    console.log("Service:",user)
     let places = await user.places  //virtual por eso regresa una promesa
-    //console.log("virtual:",places);
+    console.log("virtual:",places);
     return  places
 }
 
