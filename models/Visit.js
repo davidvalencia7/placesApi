@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate')
 
+const REACTIONS = ['like','love','disappointment','yummy','anger','disgust']
+
 let visitSchema = new mongoose.Schema({
     _user : {
         type : mongoose.Schema.Types.ObjectId,
@@ -11,6 +13,10 @@ let visitSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Place',
         required : true
+    },
+    reaction : {
+        type : String,
+        enum : REACTIONS
     },
     observation : String
 })
