@@ -6,7 +6,7 @@ const visitController = require('../controllers/VisitController')
 const findPlaceMiddleware = require('../middlewares/findPlacesMiddleware')
 
 
-router.route('/:id/visits')
+router.route('/:slug/visits')
     .get(findPlaceMiddleware, visitController.index)
     .post(findPlaceMiddleware,visitController.create)
 
