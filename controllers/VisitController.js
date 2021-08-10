@@ -4,7 +4,9 @@ const visitService = require('../services/visitService')
 const index = async (req, res, next) => {
     //req.user
     try{
-        return res.json(visitService.getAllVisits(req))
+        let visits = await visitService.getAllVisits(req)
+        //console.log("Index:",visits)
+        return res.json(visits)
     }catch(err){
         return res.json({err})
     }
