@@ -1,4 +1,19 @@
 const mongoose = require('mongoose')
+const randomstring = require('randomstring')
+
+function assignRandomAndUniqueValueToField(app,field,next){
+    const randomString = randomstring.generate(20)
+
+    let searchCriteria = {}
+    searchCriteria[field] = randomString
+
+    Application.countDocuments(searchCriteria).then( count => {
+        if(count > 0) return assignRandomAndUniqueValueToField(app,field,next)
+
+        app[field] = randomString
+        next()
+    })
+}
 
 let applicationSchema = new mongoose.Schema({
     applicationId : {
@@ -14,6 +29,13 @@ let applicationSchema = new mongoose.Schema({
     origins : String,
     name : String
 })
+
+applicationSchema.pre('validate', function(next){
+    assignRandomAndUniqueValueToField(this,'applicationId', () => {
+        assignRandomAndUniqueValueToField(this,'secret', next)
+    })
+})
+
 
 const Application = mongoose.model('Application', applicationSchema)
 
