@@ -12,7 +12,7 @@ router.route('/')
     .post(applicationsController.create)
 
 router.route('/:id')
-    .delete(applicationsController.find, authenticateOwner, applicationsController.destroy)
+    .delete(applicationsController.find, applicationsController.destroy)
 
 
 module.exports = router

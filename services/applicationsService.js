@@ -23,7 +23,8 @@ const getApplication = async (id) => {
 }
 
 const deleteApplication = async (req) => {
-    let app = await req.Application.remove()
+    //console.log(req)
+    let app = await req.application.remove()
     return app
 }
 

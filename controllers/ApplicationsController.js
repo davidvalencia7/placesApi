@@ -4,7 +4,7 @@ const  applicationService = require('../services/applicationsService')
 const index = async (req,res) => {
     try{
         let apps = await applicationService.getAllApplications()
-        return apps
+        return res.json(apps)
     }
     catch(error){
         return res.json({error})
@@ -22,19 +22,22 @@ const create = async (req,res) => {
 
 const find = async (req,res,next) => {
     try{
-        let app = await applicationService.getApplication(req.params.Application_id)
+        //console.log("params",req.params);
+        let app = await applicationService.getApplication(req.params.id)
         req.mainObject = app
         req.application = app
+        next()
     }catch(error){
         return res.json({error})
     }
 }
 
-const destroy = async (req,res) => {
+const destroy = async (req,res,next) => {
     try {
         let app = await applicationService.deleteApplication(req)
         return res.json(app)
     } catch (error) {
+        //console.error(error);
         return res.status(500).json({error})
     }
 }
