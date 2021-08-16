@@ -1,14 +1,17 @@
 const express = require('express')
 let router = express.Router()
 
-const authenticateOwner = require('../middlewares/authenticateOwner')
+const authenticateAdmin = require('../middlewares/authenticateAdmin')
+const findUser = require('../middlewares/findUser')
 const applicationsController = require('../controllers/ApplicationsController')
 
 const jwtMiddleware = require('express-jwt')
 const secrets = require('../config/secrets')
 
+router.all('*', jwtMiddleware({secret : secrets.jwtSecret, algorithms: ['HS256']}),findUser, authenticateAdmin)
+
 router.route('/')
-    .get(jwtMiddleware({secret : secrets.jwtSecret, algorithms: ['HS256']}), applicationsController.index)
+    .get( applicationsController.index)
     .post(applicationsController.create)
 
 router.route('/:id')

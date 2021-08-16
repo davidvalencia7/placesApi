@@ -4,11 +4,13 @@ const favoriteService = require('../services/favoritesService')
 const index = async (req, res, next) => {
     //req.user
     try{
-        console.log("index favorites",req.user)
+        console.log("index favorites")
+        if(!req.fullUser)return res.json({})
+
         let fav = await favoriteService.getAllFavorites(req)
         console.log("Fav controller:",fav)
-        req.mainObj = fav
-        req.favorite = fav
+        //req.mainObj = fav
+        //req.favorite = fav
         res.json(fav)
     }catch(err){
         return res.json({err})

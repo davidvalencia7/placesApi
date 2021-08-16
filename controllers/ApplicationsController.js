@@ -11,8 +11,9 @@ const index = async (req,res) => {
     }
 }
 
-const create = async (req,res) => {
+const create = async (req,res,next) => {
     try {
+        console.log("ÇREATE----------------")
         let app = await applicationService.addApplication(req)
         return res.json(app)
     } catch (error) {

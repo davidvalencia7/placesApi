@@ -11,6 +11,7 @@ const getAllApplications = async () => {
 }
 
 const addApplication = async (req) => {
+    console.log(req.body)
    let params = buildParams(validParams, req.body)
 
    let app = await Application.create(params)

@@ -4,6 +4,7 @@ const User = require('../models/User')
 
 const index = async (req, res) => {
      let users = await userService.getAllUsers()
+     console.error(users);
      res.json(users)
 }
 

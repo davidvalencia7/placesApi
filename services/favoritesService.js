@@ -6,10 +6,9 @@ const FavoritePlace = require('../models/FavoritePlace')
 const User = require('../models/User')
 
 const getAllFavorites = async (req) => {
-    console.log("service favorites:",req.user.id)
-    let user = await User.findOne({'_id':req.user.id})
-    console.log(user)
-    favorites = await user.favorites
+    console.log("service favorites:",req.fullUser)
+
+    favorites = await req.fullUser.favorites
     console.log(favorites)
     return favorites
 }
