@@ -16,7 +16,7 @@ const applications = require('./routes/applications')
 //MIDDLEWARE
 const findAppBySecret = require('./middlewares/findAppBySecret')
 const findAppByApplicationId = require('./middlewares/findAppByApplicationId')
-const authApp = require('./middlewares/authApp')
+const authApp = require('./middlewares/authApp')()
 
 const DB = require('./config/database')
 
@@ -34,11 +34,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(findAppBySecret)
 app.use(findAppByApplicationId)
-app.use(authApp)
+app.use(authApp.unless({method: 'OPTIONS'}))
 
 app.use(
   jwtMiddleware( {secret : secrets.jwtSecret, algorithms: ['HS256'] } )
-  .unless({path: ['/sessions','/users'], method : 'GET' })
+  .unless({path: ['/sessions','/users'], method : ['GET','OPTIONS'] })
  )
 
 app.use('/places',places) //montar el router de places
