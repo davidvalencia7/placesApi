@@ -17,6 +17,7 @@ const applications = require('./routes/applications')
 const findAppBySecret = require('./middlewares/findAppBySecret')
 const findAppByApplicationId = require('./middlewares/findAppByApplicationId')
 const authApp = require('./middlewares/authApp')()
+const allowCORs = require('./middlewares/allowCORs')()
 
 const DB = require('./config/database')
 
@@ -35,6 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(findAppBySecret)
 app.use(findAppByApplicationId)
 app.use(authApp.unless({method: 'OPTIONS'}))
+
+app.use(allowCORs.unless({path: '/public'}))
 
 app.use(
   jwtMiddleware( {secret : secrets.jwtSecret, algorithms: ['HS256'] } )
