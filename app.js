@@ -13,6 +13,10 @@ const visit = require('./routes/visit')
 const visitPlaces = require('./routes/visitPlaces')
 const applications = require('./routes/applications')
 
+//MIDDLEWARE
+const findAppBySecret = require('./middlewares/findAppBySecret')
+const authApp = require('./middlewares/authApp')
+
 const DB = require('./config/database')
 
 const secrets = require('./config/secrets')
@@ -26,6 +30,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(findAppBySecret)
+app.use(authApp)
 
 app.use(
   jwtMiddleware( {secret : secrets.jwtSecret, algorithms: ['HS256'] } )
@@ -50,7 +57,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  console.log(res.locals.error)
   // render the error page
   res.status(err.status || 500);
   res.json(err);
