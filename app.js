@@ -15,6 +15,7 @@ const applications = require('./routes/applications')
 
 //MIDDLEWARE
 const findAppBySecret = require('./middlewares/findAppBySecret')
+const findAppByApplicationId = require('./middlewares/findAppByApplicationId')
 const authApp = require('./middlewares/authApp')
 
 const DB = require('./config/database')
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(findAppBySecret)
+app.use(findAppByApplicationId)
 app.use(authApp)
 
 app.use(
