@@ -6,7 +6,8 @@ module.exports =  function(options){
             if(appCount > 0 && !req.application)
                 return next(new Error('An application is required to consume this API'))
     
-            req.validApp = true
+            if(!req.validRequest) return next(new Error('Origin invalid'))
+            
             next()
         })
         .catch(next)
